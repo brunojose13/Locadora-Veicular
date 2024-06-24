@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('cpf', 11)->unique();
             $table->string('phone_number')->unique();
-            $table->string('email', 35)->unique();
+            $table->string('email')->unique();
             $table->string('password');
             $table->timestamp('last_sign_in');
             $table->rememberToken();

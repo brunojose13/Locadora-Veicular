@@ -22,9 +22,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(EnsureIsValidSeller::class)->group(function () {
     Route::prefix('clientes')->group(function () {
-        Route::get('/buscar/{id?}', [CustomerController::class, 'index'])->name('cliente-buscar');
-        Route::post('/cadastrar', [CustomerController::class, 'store'])->name('cliente-cadastrar');
-        Route::patch('/atualizar-habilitação/{id}', [CustomerController::class, 'update'])->name('cliente-habilitação');
-        Route::delete('/excluir/{id}', [CustomerController::class, 'delete'])->name('cliente-excluir');
+        Route::get('/buscar/{id?}', [CustomerController::class, 'index'])
+            ->name('cliente-buscar');
+
+        Route::post('/cadastrar', [CustomerController::class, 'store'])
+            ->name('cliente-cadastrar');
+
+        Route::patch('/atualizar-habilitação/{id}', [CustomerController::class, 'update'])
+            ->name('cliente-habilitação');
+
+        Route::delete('/excluir/{id}', [CustomerController::class, 'delete'])
+            ->name('cliente-excluir');
     });
 });

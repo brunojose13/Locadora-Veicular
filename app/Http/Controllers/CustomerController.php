@@ -8,11 +8,11 @@ class CustomerController extends Controller
 {
     public function index(Request $request)
     {
-        dd('teste drive');
+        dd('index');
     }
 
     public function store(Request $request)
     {
-        dd('teste drive');
+        dd('store');
     }
 }

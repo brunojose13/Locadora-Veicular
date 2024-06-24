@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('cpf', 11)->unique();
-            $table->string('email', 35)->unique();
+            $table->string('email')->unique();
             $table->string('phone_number')->unique();
             $table->timestamp('date_of_birth');
             $table->smallInteger('license_time');
