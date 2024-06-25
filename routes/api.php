@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Middleware\EnsureIsValidSeller;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,15 +24,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(EnsureIsValidSeller::class)->group(function () {
     Route::prefix('clientes')->group(function () {
         Route::get('/buscar/{id?}', [CustomerController::class, 'index'])
-            ->name('cliente-buscar');
+            ->name('buscar-cliente');
 
         Route::post('/cadastrar', [CustomerController::class, 'store'])
-            ->name('cliente-cadastrar');
+            ->name('cadastrar-cliente');
 
         Route::patch('/atualizar-habilitação/{id}', [CustomerController::class, 'update'])
-            ->name('cliente-habilitação');
+            ->name('atualizar-habilitacao');
 
         Route::delete('/excluir/{id}', [CustomerController::class, 'delete'])
-            ->name('cliente-excluir');
+            ->name('excluir-cliente');
     });
 });
