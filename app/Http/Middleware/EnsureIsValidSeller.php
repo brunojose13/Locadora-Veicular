@@ -15,7 +15,6 @@ class EnsureIsValidSeller
      */
     public function handle(Request $request, Closure $next): Response
     {
-        dump('passou na middleware');
         return $next($request);
     }
 }
