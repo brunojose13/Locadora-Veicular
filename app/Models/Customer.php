@@ -12,16 +12,16 @@ class Customer extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'age',
         'cpf',
-        'phone_number',
         'email',
+        'phone_number',
+        'date_of_birth',
         'license_time'
     ];
 
     protected $hidden = [
-        'age',
         'cpf',
+        'date_of_birth',
         'license_time'
     ];
 }
