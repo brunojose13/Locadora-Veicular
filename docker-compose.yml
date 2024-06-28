@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  db:
+    image: mysql:5.7
+    container_name: my_mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    env_file:
+      - .env
+    environment:
+      MYSQL_HOST: ${DB_HOST}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:3306"
+    volumes:
+      - database_rental:/var/lib/mysql
+    networks:
+      - back_rental
+  app:
+    build: .
+    container_name: php
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - back_rental
+
+volumes:
+  database_rental:
+    name: database_rental
+    driver: local
+
+networks:
+  back_rental:
+    name: back_rental
+    driver: bridge
