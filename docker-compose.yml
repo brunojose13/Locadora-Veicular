@@ -20,7 +20,6 @@ services:
     env_file:
       - .env
     environment:
-      # MYSQL_HOST: ${DB_HOST}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
