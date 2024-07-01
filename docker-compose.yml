@@ -1,5 +1,17 @@
 version: '3.9'
 services:
+  app:
+    build: .
+    container_name: php
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - app-car-rental
+
   db:
     image: mysql:5.7
     container_name: my_mysql
@@ -8,35 +20,24 @@ services:
     env_file:
       - .env
     environment:
-      MYSQL_HOST: ${DB_HOST}
+      # MYSQL_HOST: ${DB_HOST}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-      - "${DB_PORT}:3306"
+      - "3307:${DB_PORT}"
     volumes:
-      - database_rental:/var/lib/mysql
+      - database-rental:/var/lib/mysql
     networks:
-      - back_rental
-  app:
-    build: .
-    container_name: php
-    volumes:
-      - ./:/usr/src/app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    networks:
-      - back_rental
+      - app-car-rental
 
 volumes:
-  database_rental:
-    name: database_rental
+  database-rental:
+    name: database-rental
     driver: local
 
 networks:
-  back_rental:
-    name: back_rental
+  app-car-rental:
+    name: app-car-rental
     driver: bridge
