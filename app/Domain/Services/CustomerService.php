@@ -2,9 +2,9 @@
 
 namespace App\Domain\Services;
 
-use App\Adapters\CustomerRepository;
-use App\Domain\Entities\CustomerEntity;
-use App\Models\Customer;
+use App\Infrastructure\Adapters\CustomerRepository;
+use App\Domain\Entities\CustomerEntity as Customer;
+// use App\Models\Customer;
 
 class CustomerService
 {
@@ -12,14 +12,16 @@ class CustomerService
     {
     }
 
-    public function storeCustomer(CustomerEntity $customerEntity)
+    public function storeCustomer(Customer $customer)
     {
-        try {
-            $customer = Customer::create($customerEntity->jsonSerialize());
-        } catch (\Throwable) {
-
+        if ($customer->hasId()) {
+            $customer->setId(null);
         }
 
-        return $customer;
+        try {
+            return $this->customerRepository->storeCustomer($customer);
+        } catch (\Throwable $exception) {
+            throw new \Exception($exception->getMessage());
+        }
     }
 }

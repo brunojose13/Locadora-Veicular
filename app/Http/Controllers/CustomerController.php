@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\Entities\CustomerEntity;
+use App\Domain\Entities\CustomerEntity as Customer;
 use App\Http\Requests\StoreCustomerRequest;
-use App\Models\Customer;
+// use App\Models\Customer;
 use App\Domain\Services\CustomerService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Routing\ResponseFactory;
@@ -20,7 +20,8 @@ class CustomerController extends Controller
     {        
         $data = $request->validated();
 
-        $customer = $this->customerService->storeCustomer(new CustomerEntity(
+        $customer = $this->customerService->storeCustomer(new Customer(
+            null,
             $data['first_name'],
             $data['last_name'],
             $data['cpf'],

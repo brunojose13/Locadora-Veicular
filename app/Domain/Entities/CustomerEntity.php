@@ -5,41 +5,41 @@ namespace App\Domain\Entities;
 use Carbon\Carbon;
 use JsonSerializable;
 
-class CustomerEntity implements JsonSerializable
+class CustomerEntity extends PersonEntity implements JsonSerializable
 {
+    private int|null $id;
+    private Carbon $birthDate;
+    private int $licenceTime;
+
     public function __construct(
-        private string $name,
-        private ?string $lastName,
-        private string $cpf,
-        private string $email,
-        private string $phoneNumber,
-        private Carbon $birthDate,
-        private int $licenceTime
-    ) {}
+        ?int $id,
+        string $name,
+        ?string $lastName,
+        string $cpf,
+        string $email,
+        string $phoneNumber,
+        Carbon $birthDate,
+        int $licenceTime
+    ) {
+        parent::__construct($name, $lastName, $cpf, $email, $phoneNumber);
 
-    public function getName(): string
-    {
-        return $this->name;
+        $this->id = $id;
+        $this->birthDate = $birthDate;
+        $this->licenceTime = $licenceTime;
     }
 
-    public function getLastName(): ?string
+    public function getId(): ?int
     {
-        return $this->lastName;
+        return $this->id;
     }
 
-    public function getCpf(): string
+    public function setId(?int $newId): void
     {
-        return $this->cpf;
-    }
+        if ($newId !== null && $newId < 0) {
+            throw new \Exception('o id não pode ser negativo');
+        }
 
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function getPhoneNumber(): string
-    {
-        return $this->phoneNumber;
+        $this->id = $newId;
     }
 
     public function getBirthDate(): Carbon
@@ -52,16 +52,29 @@ class CustomerEntity implements JsonSerializable
         return $this->licenceTime;
     }
 
+    public function hasId(): bool
+    {
+        return ! empty($this->id);
+    }
+
     public function jsonSerialize(): mixed
     {
-        return [
+        $properties = [
             'first_name' => $this->getName(),
             'last_name' => $this->getLastName(),
             'cpf' => $this->getCpf(),
             'email' => $this->getEmail(),
             'phone_number' => $this->getPhoneNumber(),
-            'date_of_birth' => $this->getBirthDate(),
+            'date_of_birth' => $this->getBirthDate()->toDate(),
             'license_time' => $this->getLicenceTime()
         ];
+
+        if ($this->hasId()) {
+            $properties = array_merge([
+                'id' => $this->getId()
+            ], $properties);
+        }
+
+        return $properties;
     }
 }
