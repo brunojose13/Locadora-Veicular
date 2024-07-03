@@ -1,16 +1,15 @@
 <?php
 
-namespace Tests\Unit;
-
-use PHPUnit\Framework\TestCase;
-
-class ExampleTest extends TestCase
-{
-    /**
-     * A basic test example.
-     */
-    public function test_that_true_is_true(): void
-    {
-        $this->assertTrue(true);
-    }
-}
+describe('multiplication', function () {
+    it('will multiply 2 * 3', function () {
+        $result = 2 * 3;
+  
+        expect($result)->toBe(6);
+     });
+  
+     it('will multiply 5 * 10', function () {
+        $result = 5 * 10;
+  
+        expect($result)->toBe(50);
+     });
+ });
