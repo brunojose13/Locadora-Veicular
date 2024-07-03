@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Enums\HttpStatus;
 use App\Http\Requests\LoginRequest;
 use App\Infrastructure\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -47,5 +46,19 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Usuário deslogado com sucesso!'
         ], Status::HTTP_OK);
+    }
+
+    public function recoverAuthenticated(Request $request): JsonResponse
+    {
+        return response()->json([
+            'user' => $request->user()->toArray()
+        ], Status::HTTP_OK);
+    }
+
+    public function unauthorize(): JsonResponse
+    {
+        return response()->json([
+            'error' => 'Não autorizado! Você precisa estar logado para poder acessar o sistema'
+        ], Status::HTTP_UNAUTHORIZED);
     }
 }
