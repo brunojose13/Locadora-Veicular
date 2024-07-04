@@ -28,7 +28,7 @@ describe('authentication', function () {
             ->toBe(Status::HTTP_ACCEPTED);
     });
 
-    it('may remain active', function () use ($credentials) {
+    it('will remain active', function () use ($credentials) {
         $user = User::factory()->create($credentials);
         $token = $user->createToken('test-token')->plainTextToken;
 
@@ -49,5 +49,25 @@ describe('authentication', function () {
         expect($userFromResponse)->toHaveProperties(
             array_keys($user->toArray())
         );
+    });
+
+    it('will block unauthorized users', function () {
+        $request = Request::create(
+            route('authenticated.user')
+        );
+
+        // Esse handle() retornará uma string contendo um html de redicionamento para a rota `unauthorized`
+        $html = app()->handle($request)->getContent();
+        
+        preg_match('/url=\'(.*?)\'/', $html, $matches);
+        $url = $matches[1];
+    
+        // O handle() será utilizado novamente para uma nova requisição na rota `unauthorized` 
+        $response = app()->handle(Request::create($url));
+        
+        expect($response)->toBeInstanceOf(JsonResponse::class);
+        expect($response->getStatusCode())
+            ->toBeInt()
+            ->toBe(Status::HTTP_UNAUTHORIZED);
     });
 });
