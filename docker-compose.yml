@@ -14,7 +14,7 @@ services:
 
   db:
     image: mysql:5.7
-    container_name: my_mysql
+    container_name: mysql
     restart: always
     command: --default-authentication-plugin=mysql_native_password
     env_file:
@@ -23,7 +23,7 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "3307:${DB_PORT}"
+      - "${DB_EXPOSED_PORT}:${DB_PORT}"
     volumes:
       - database-rental:/var/lib/mysql
     networks:
