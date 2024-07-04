@@ -21,4 +21,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
-Route::get('/unauthorized', [AuthController::class, 'recoverAuthenticated'])->name('unauthorized');
+Route::get('/unauthorized', [AuthController::class, 'unauthorize'])->name('unauthorized');
