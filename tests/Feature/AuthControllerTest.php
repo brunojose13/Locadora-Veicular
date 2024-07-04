@@ -32,9 +32,11 @@ describe('authentication', function () {
         $user = User::factory()->create($credentials);
         $token = $user->createToken('test-token')->plainTextToken;
 
-        $request = Request::create(route('authenticated.user'), 'GET');
-        $request->headers->set('Authorization', 'Bearer ' . $token);
+        $request = Request::create(
+            route('authenticated.user')
+        );
 
+        $request->headers->set('Authorization', 'Bearer ' . $token);
         $response = app()->handle($request);
         
         expect($response)->toBeInstanceOf(JsonResponse::class);
