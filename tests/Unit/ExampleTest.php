@@ -12,7 +12,11 @@ describe('sum', function () {
   
         expect($result)->toBe(4.0);
      });
- })->skip();
+ });
+
+it('throws exception', function () {
+    throw new Exception('Something happened.');
+})->throws(Exception::class);
 
 function sum($a, $b) 
 {
