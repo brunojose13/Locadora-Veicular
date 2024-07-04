@@ -15,7 +15,7 @@ describe('authentication', function () {
     ];
 
     it('can make a login', function () use ($credentials) {
-        $user = User::factory()->create($credentials);
+        User::factory()->create($credentials);
 
         $response = app()->handle(Request::create(
             route('login', $credentials),
