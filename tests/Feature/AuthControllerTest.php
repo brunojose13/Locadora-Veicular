@@ -28,7 +28,25 @@ describe('authentication', function () {
             ->toBe(Status::HTTP_ACCEPTED);
     });
 
-    it('will remain active', function () use ($credentials) {
+    it('can make a logout', function () use ($credentials) {
+        $user = User::factory()->create($credentials);
+        $token = $user->createToken('test-token')->plainTextToken;
+
+        $request = Request::create(
+            route('logout'),
+            'PATCH'
+        );
+
+        $request->headers->set('Authorization', 'Bearer ' . $token);
+        $response = app()->handle($request);
+
+        expect($response)->toBeInstanceOf(JsonResponse::class);
+        expect($response->getStatusCode())
+            ->toBeInt()
+            ->toBe(Status::HTTP_OK);
+    });
+
+    it('keeps the user active', function () use ($credentials) {
         $user = User::factory()->create($credentials);
         $token = $user->createToken('test-token')->plainTextToken;
 
