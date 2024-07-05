@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response as Status;
 
 uses(RefreshDatabase::class);
 
-describe('authentication', function () {
+describe('Authentication', function () {
     $credentials = [
         'email' => 'test@test.com',
         'password' => '123456'
