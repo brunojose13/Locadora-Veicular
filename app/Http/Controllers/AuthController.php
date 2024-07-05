@@ -2,63 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Services\AuthService;
+use App\Domain\ValueObjects\Credentials;
 use App\Http\Requests\LoginRequest;
+use App\Http\Responses\ArrayResponse;
+use App\Http\Responses\MessageResponse;
 use App\Infrastructure\Models\User;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response as Status;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function login(LoginRequest $request): JsonResponse
+    public function __construct(private AuthService $authService)
+    {
+    }
+
+    public function login(LoginRequest $request): Response
     {
         $credentials = $request->validated();
 
-        if (! Auth::attempt($credentials)) {
-            return response()->json([
-                'message' => 'O e-mail ou a senha estão inválidos'
-            ], Status::HTTP_UNAUTHORIZED);
+        try{
+            $output = $this->authService->authenticate(new Credentials(
+                $credentials['email'], 
+                $credentials['password']
+            ));
+
+            $response = new ArrayResponse($output, Status::HTTP_ACCEPTED);
+
+            return $response->getResponse();
+        } catch (AuthenticationException $exception) {
+            $response = new MessageResponse($exception->getMessage(), Status::HTTP_UNAUTHORIZED);
+            
+            return $response->getResponse();
         }
-
-        /** @var User $user */
-        $user = Auth::user();
-
-        $minutesExpiration = 10;
-
-        $token = $user->createToken(
-            'Token for user ID: ' . $user->id,
-            ['*'],
-            now()->addMinutes($minutesExpiration)
-        )->plainTextToken;
-
-        return response()->json([
-            'message' => 'Login realizado com sucesso!',
-            'token' => $token,
-            'expire in' => $minutesExpiration . ' minutes'
-        ], Status::HTTP_ACCEPTED);
     }
 
-    public function logout(Request $request): JsonResponse
+    public function logout(Request $request): Response
     {
         $request->user()->tokens()->delete();
-
-        return response()->json([
-            'message' => 'Usuário deslogado com sucesso!'
-        ], Status::HTTP_OK);
+        $output = $this->authService->invalidate($request->user());
+        
+        $response = new MessageResponse($output, Status::HTTP_OK);
+        
+        return $response->getResponse();
     }
 
-    public function recoverAuthenticated(Request $request): JsonResponse
+    public function recoverAuthenticated(Request $request): Response
     {
-        return response()->json([
+        $response = new ArrayResponse([
             'user' => $request->user()->toArray()
         ], Status::HTTP_OK);
+
+        return $response->getResponse();
     }
 
-    public function unauthorize(): JsonResponse
+    public function unauthorize(): Response
     {
-        return response()->json([
-            'error' => 'Não autorizado! Você precisa estar logado para poder acessar o sistema'
-        ], Status::HTTP_UNAUTHORIZED);
+        $response = new MessageResponse(
+            $this->authService->getDeauthorizeMessage(),
+            Status::HTTP_UNAUTHORIZED
+        );
+            
+        return $response->getResponse();
     }
 }
