@@ -2,12 +2,13 @@
 
 namespace App\Domain\Services;
 
+use App\Domain\Ports\Auth\IAuthService;
 use App\Domain\ValueObjects\Credentials;
 use App\Infrastructure\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 
-class AuthService
+class AuthService implements IAuthService
 {
     public function authenticate(Credentials $credentials): array
     {
