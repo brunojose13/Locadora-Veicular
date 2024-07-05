@@ -17,11 +17,14 @@ describe('authentication', function () {
     it('can make a login', function () use ($credentials) {
         User::factory()->create($credentials);
 
-        $response = app()->handle(Request::create(
+        $request = Request::create(
             route('login', $credentials),
             'POST'
-        ));
+        );
+
+        $response = app()->handle($request);
         
+        expect($request->method())->toBe('POST');
         expect($response)->toBeInstanceOf(JsonResponse::class);
         expect($response->getStatusCode())
             ->toBeInt()
@@ -34,12 +37,13 @@ describe('authentication', function () {
 
         $request = Request::create(
             route('logout'),
-            'PATCH'
+            'DELETE'
         );
 
         $request->headers->set('Authorization', 'Bearer ' . $token);
         $response = app()->handle($request);
 
+        expect($request->method())->toBe('DELETE');
         expect($response)->toBeInstanceOf(JsonResponse::class);
         expect($response->getStatusCode())
             ->toBeInt()
@@ -57,6 +61,7 @@ describe('authentication', function () {
         $request->headers->set('Authorization', 'Bearer ' . $token);
         $response = app()->handle($request);
         
+        expect($request->method())->toBe('GET');
         expect($response)->toBeInstanceOf(JsonResponse::class);
         expect($response->getStatusCode())
             ->toBeInt()
@@ -80,9 +85,13 @@ describe('authentication', function () {
         preg_match('/url=\'(.*?)\'/', $html, $matches);
         $url = $matches[1];
     
-        // O handle() será utilizado novamente para uma nova requisição na rota `unauthorized` 
-        $response = app()->handle(Request::create($url));
+        $requestToUnauthorized = Request::create($url);
+
+        // O handle() será utilizado novamente para uma nova requisição na rota `unauthorized`
+        $response = app()->handle($requestToUnauthorized);
         
+        expect($request->method())->toBe('GET');
+        expect($requestToUnauthorized->method())->toBe('GET');
         expect($response)->toBeInstanceOf(JsonResponse::class);
         expect($response->getStatusCode())
             ->toBeInt()
