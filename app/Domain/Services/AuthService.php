@@ -20,7 +20,6 @@ class AuthService implements IAuthService
 
          /** @var User $user */
          $user = Auth::user();
-
          $minutesExpiration = 10;
  
          $token = $user->createToken(
@@ -42,6 +41,14 @@ class AuthService implements IAuthService
 
         return 'Usuário deslogado com sucesso!';
     }
+
+    public function getAttributesFromLoggedAuth(User $user): array
+    {
+        return [
+           'user' => $user->toArray()
+        ];
+    }
+
 
     public function getDeauthorizeMessage(): string
     {
