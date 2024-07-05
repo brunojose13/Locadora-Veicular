@@ -18,6 +18,15 @@ it('throws exception', function () {
     throw new Exception('Something happened.');
 })->throws(Exception::class);
 
+it('has products', function (string $product) {
+    expect($product)->not->toBeEmpty();
+})->with('products');
+ 
+dataset('products', [
+    'egg',
+    'milk'
+]);
+
 function sum($a, $b) 
 {
     return $a + $b;
