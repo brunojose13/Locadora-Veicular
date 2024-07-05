@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domain\Ports\Output;
+namespace App\Domain\Ports;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 

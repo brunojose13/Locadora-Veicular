@@ -2,7 +2,7 @@
 
 namespace App\Http\Responses;
 
-use App\Domain\Ports\Output\IJsonResponse;
+use App\Domain\Ports\IJsonResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
