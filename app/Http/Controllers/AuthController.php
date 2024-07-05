@@ -7,7 +7,6 @@ use App\Domain\ValueObjects\Credentials;
 use App\Http\Requests\LoginRequest;
 use App\Http\Responses\ArrayResponse;
 use App\Http\Responses\MessageResponse;
-use App\Infrastructure\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as Status;
