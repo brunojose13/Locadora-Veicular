@@ -40,9 +40,7 @@ class AuthController extends Controller
 
     public function logout(Request $request): Response
     {
-        $request->user()->tokens()->delete();
         $output = $this->authService->invalidate($request->user());
-        
         $response = new MessageResponse($output, Status::HTTP_OK);
         
         return $response->getResponse();
@@ -50,10 +48,9 @@ class AuthController extends Controller
 
     public function recoverAuthenticated(Request $request): Response
     {
-        $response = new ArrayResponse([
-            'user' => $request->user()->toArray()
-        ], Status::HTTP_OK);
-
+        $output = $this->authService->getAttributesFromLoggedAuth($request->user());
+        $response = new ArrayResponse($output, Status::HTTP_OK);
+        
         return $response->getResponse();
     }
 
