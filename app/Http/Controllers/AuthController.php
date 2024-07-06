@@ -10,7 +10,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Responses\ArrayResponse;
 use App\Http\Responses\MessageResponse;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as Status;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -27,7 +26,7 @@ class AuthController extends Controller
         try{
             $output = $this->authService->authenticate(new Credentials(
                 $credentials['email'], 
-                $credentials['password']
+                (string) $credentials['password']
             ));
 
             $response = new ArrayResponse($output, Status::HTTP_ACCEPTED);
