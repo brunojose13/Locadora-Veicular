@@ -8,21 +8,20 @@ use App\Domain\Ports\Auth\IAuthService;
 use App\Domain\ValueObjects\Credentials;
 use App\Infrastructure\Models\User;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Support\Facades\Auth;
 
 class AuthService implements IAuthService
 {
     public function authenticate(Credentials $credentials): array
     {
-        if (! Auth::attempt($credentials->toArray())) {
+        if (! auth()->attempt($credentials->toArray())) {
             throw new AuthenticationException(
                 'O e-mail ou a senha estão inválidos'
             );
         }
 
          /** @var User $user */
-         $user = Auth::user();
-         $minutesExpiration = 10;
+         $user = auth()->user();
+         $minutesExpiration = config('auth.token_expiration_minutes', 10);
  
          $token = $user->createToken(
              'Token for user ID: ' . $user->id,
@@ -37,15 +36,20 @@ class AuthService implements IAuthService
         ];
     }
 
-    public function invalidate(User $user): string
+    public function invalidate(): string
     {
+        /** @var User $user */
+        $user = auth()->user();
         $user->tokens()->delete();
 
         return 'Usuário deslogado com sucesso!';
     }
 
-    public function getAttributesFromLoggedAuth(User $user): array
+    public function getAttributesFromLoggedAuth(): array
     {
+        /** @var User $user */
+        $user = auth()->user();
+
         return [
            'user' => $user->toArray()
         ];

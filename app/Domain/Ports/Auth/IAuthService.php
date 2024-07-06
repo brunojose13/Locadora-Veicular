@@ -10,7 +10,7 @@ use App\Infrastructure\Models\User;
 interface IAuthService
 {
     public function authenticate(Credentials $credentials): array;
-    public function invalidate(User $user): string;
-    public function getAttributesFromLoggedAuth(User $user): array;
+    public function invalidate(): string;
+    public function getAttributesFromLoggedAuth(): array;
     public function getDeauthorizeMessage(): string;
 }
