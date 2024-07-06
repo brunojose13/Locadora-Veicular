@@ -2,6 +2,8 @@
 
 return [
 
+    'token_expiration_minutes' => env('AUTH_TOKEN_EXPIRATION_MINUTES', 10),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
