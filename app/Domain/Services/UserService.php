@@ -6,47 +6,56 @@ namespace App\Domain\Services;
 
 use App\Domain\Entities\User;
 use App\Domain\Ports\User\IUserRepository;
+use App\Domain\Ports\User\IUserService;
 use App\Domain\ValueObjects\UserDataForUpdate;
 
-class UserService
+class UserService implements IUserService
 {
     public function __construct(private IUserRepository $userRepository)
     {
     }
 
-    public function createUser(User $user): bool
+    public function createUser(User $user): string
     {
         try {
-            return $this->userRepository->save($user);
+            $this->userRepository->save($user);
+
+            return '';
         } catch (\Exception $e) {
-            return false;
+            return '';
         }
     }
 
-    public function updateUser(UserDataForUpdate $data): bool
+    public function updateUser(UserDataForUpdate $data): string
     {
         try {
-            return $this->userRepository->update($data);
+            $this->userRepository->update($data);
+
+            return '';
         } catch (\Exception $e) {
-            return false;
+            return '';
         }
     }
 
-    public function getUserByEmail(string $email): ?User
+    public function getUserByEmail(string $email): array
     {
         try {
-            return $this->userRepository->getByEmail($email);
+            $this->userRepository->getByEmail($email);
+            return [];
+
         } catch (\Exception $e) {
-            return null;
+            return [];
         }
     }
 
-    public function deleteUser(string $email): bool
+    public function deleteUser(string $email): string
     {
         try {
-            return $this->userRepository->delete($email);
+            $this->userRepository->delete($email);
+
+            return '';
         } catch (\Exception $e) {
-            return false;
+            return '';
         }
     }
 }
