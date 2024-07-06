@@ -40,17 +40,17 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request): Response
+    public function logout(): Response
     {
-        $output = $this->authService->invalidate($request->user());
+        $output = $this->authService->invalidate();
         $response = new MessageResponse($output, Status::HTTP_OK);
         
         return $response->getResponse();
     }
 
-    public function recoverAuthenticated(Request $request): Response
+    public function recoverAuthenticated(): Response
     {
-        $output = $this->authService->getAttributesFromLoggedAuth($request->user());
+        $output = $this->authService->getAttributesFromLoggedAuth();
         $response = new ArrayResponse($output, Status::HTTP_OK);
         
         return $response->getResponse();
