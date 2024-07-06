@@ -19,7 +19,7 @@ class UserRepository implements IUserRepository
     public function save(UserEntity $user): bool
     {
         self::getModel()->create($user->toArray());
-        
+
         return true;
     }
 
@@ -44,7 +44,6 @@ class UserRepository implements IUserRepository
             $user->id ,
             $user->name,
             new Credentials($user->email, $user->password),
-            $user->email_verified_at,
             $user->remember_token,
             $user->created_at,
             $user->updated_at
