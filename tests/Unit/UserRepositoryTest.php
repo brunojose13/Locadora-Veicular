@@ -1,13 +1,19 @@
 <?php
 
+use App\Domain\Entities\User as UserEntity;
+use App\Domain\Ports\User\IUserRepository;
 use App\Domain\ValueObjects\Credentials;
 use App\Infrastructure\Models\User;
 
-describe('User C.R.U.D', function () {
-    it('may store', function (User $user) {
+beforeEach(function () {
+    $this->userRepository = $this->app->make(IUserRepository::class);
+});
+
+describe('C.R.U.D for User', function () {
+    it('may create', function (User $user) {
         $user->delete();
 
-        $userEntity = $userRepository->save(new \App\Domain\Entities\User(
+        $success = $this->userRepository->save(new UserEntity(
             $user->id ,
             $user->name,
             new Credentials($user->email, $user->password),
@@ -17,9 +23,8 @@ describe('User C.R.U.D', function () {
             $user->updated_at
         ));
 
-        expect($userEntity)->toBeInstanceOf(UserRepository::class);
-        expect($userEntity)->has(UserRepository::class);
+        expect($success)->toBeTrue();
     })->with([
-        'user' => fn() => User::factory()->create()
+        'model' => fn() => User::factory()->create()
     ]);
 });
