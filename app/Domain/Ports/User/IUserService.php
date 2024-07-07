@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Ports\User;
 
-use App\Domain\Entities\User;
-use App\Domain\ValueObjects\UserDataForUpdate;
+use App\Domain\ValueObjects\UserData;
 
 interface IUserService
 {
-    public function createUser(User $user): string;
-    public function updateUser(UserDataForUpdate $data): string;
-    public function getUserByEmail(string $email): array;
-    public function deleteUser(string $email): string;
+    public function getUsers(): UserListOutput;
+    public function createUser(UserData $userData): UserOutput;
+    public function updateUser(UserData $userData): UserOutput;
+    public function getUserById(int $id): UserOutput;
+    public function deleteUser(int $id): DeletedUserOutput;
 }

@@ -55,7 +55,7 @@ class AuthService implements IAuthService
         ];
     }
 
-
+    // @todo transformar em exception
     public function getDeauthorizeMessage(): string
     {
         return 'Não autorizado! Você precisa estar logado para poder acessar o sistema';

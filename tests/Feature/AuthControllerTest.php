@@ -1,12 +1,9 @@
 <?php
 
 use App\Infrastructure\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as Status;
-
-uses(RefreshDatabase::class);
 
 describe('Authentication', function () {
     $credentials = [

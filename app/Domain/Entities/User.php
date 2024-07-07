@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
+use App\Domain\Ports\IEntity;
 use App\Domain\ValueObjects\Credentials;
 use Illuminate\Support\Carbon;
 
-class User
+class User implements IEntity
 {
     public function __construct(
         private ?int $id,
@@ -33,29 +34,26 @@ class User
         return $this->credentials;
     }
 
-    public function getRememberToken(): ?string
+    public function getEmail(): string
     {
-        return $this->rememberToken;
+        return $this->getCredentials()->getEmail();
     }
 
-    public function getCreatedAt(): ?Carbon
+    public function toArray(): array
     {
-        return $this->createdAt;
-    }
-
-    public function getUpdatedAt(): ?Carbon
-    {
-        return $this->updatedAt;
-    }
-
-    public function toArray()
-    {
-        return array_merge([
+        return [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'remember_token' => $this->getRememberToken(),
-            'created_at' => $this->getCreatedAt(),
-            'updated_at' => $this->getUpdatedAt()
-        ], $this->getCredentials()->toArray());
+            'email' => $this->getEmail(),
+            'created_at' => $this->createdAt?->toDateTimeString(),
+            'updated_at' => $this->updatedAt?->toDateTimeString()
+        ];
+    }
+
+    public function toDatabase(): array
+    {
+        return array_merge([
+            'name' => $this->getName(),
+        ], $this->getCredentials()->toDatabase());
     }
 }

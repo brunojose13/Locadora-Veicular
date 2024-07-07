@@ -9,7 +9,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response as Status;
 
-class LoginRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email',
+            'name' => 'required|string',
             'password' => 'required|min:6'
         ];
     }
@@ -35,11 +35,10 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email' => [
-                'required' => 'O campo `email` é obrigatório',
-                'string' => 'O campo `email` deve ser do tipo texto (string)',
-                'email' => 'O e-mail informado deve ser válido'
-            ],
+            'name' => [
+                'required' => 'O campo `nome` é obrigatório',
+                'string' => 'O campo `nome` deve serdo tipo texto (string)'
+            ],            
             'password' => [
                 'required' => 'O campo `senha` é obrigatório',
                 'min' => 'A senha deve conter no mínimo 6 caractéres'

@@ -17,7 +17,7 @@ class MessageResponse implements IJsonResponse
     public function getResponse(): JsonResponse
     {
         return response()->json([
-            'status' => Response::$statusTexts[$this->statusCode] ?? 'OK',
+            'response_status' => Response::$statusTexts[$this->statusCode] ?? 'OK',
             'message' => $this->message ?? null
         ], $this->statusCode);
     }

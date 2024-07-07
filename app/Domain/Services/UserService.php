@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Services;
 
-use App\Domain\Entities\User;
+use App\Domain\Ports\User\DeletedUserOutput;
 use App\Domain\Ports\User\IUserRepository;
 use App\Domain\Ports\User\IUserService;
-use App\Domain\ValueObjects\UserDataForUpdate;
+use App\Domain\Ports\User\UserListOutput;
+use App\Domain\Ports\User\UserOutput;
+use App\Domain\ValueObjects\UserData;
+use App\Exceptions\UserAlreadyExistsException;
+use App\Exceptions\UserNotFoundException;
 
 class UserService implements IUserService
 {
@@ -15,47 +19,52 @@ class UserService implements IUserService
     {
     }
 
-    public function createUser(User $user): string
+    public function getUsers(): UserListOutput
     {
-        try {
-            $this->userRepository->save($user);
-
-            return '';
-        } catch (\Exception $e) {
-            return '';
-        }
+        return new UserListOutput($this->userRepository->all());
     }
 
-    public function updateUser(UserDataForUpdate $data): string
+    public function createUser(UserData $userData): UserOutput
     {
-        try {
-            $this->userRepository->update($data);
-
-            return '';
-        } catch (\Exception $e) {
-            return '';
+        $user = $this->userRepository->save($userData);
+        
+        if (empty($user)) {
+            throw new UserAlreadyExistsException();
         }
+
+        return new UserOutput($user);
     }
 
-    public function getUserByEmail(string $email): array
+    public function updateUser(UserData $userData): UserOutput
     {
-        try {
-            $this->userRepository->getByEmail($email);
-            return [];
+        $user = $this->userRepository->update($userData);
 
-        } catch (\Exception $e) {
-            return [];
+        if (empty($user)) {
+            throw new UserNotFoundException();
         }
+
+        return new UserOutput($user);
     }
 
-    public function deleteUser(string $email): string
+    public function getUserById(int $id): UserOutput
     {
-        try {
-            $this->userRepository->delete($email);
+        $user = $this->userRepository->getById($id);
 
-            return '';
-        } catch (\Exception $e) {
-            return '';
+        if (empty($user)) {
+            throw new UserNotFoundException();
         }
+
+        return new UserOutput($user);
+    }
+
+    public function deleteUser(int $id): DeletedUserOutput
+    {
+        $wasDeleted = $this->userRepository->delete($id);
+
+        if (! $wasDeleted) {
+            throw new UserNotFoundException();
+        }
+
+        return new DeletedUserOutput();
     }
 }

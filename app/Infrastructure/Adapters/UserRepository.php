@@ -4,44 +4,71 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Adapters;
 
+use App\Domain\Entities\Collections\UserCollection;
 use App\Domain\Entities\User as UserEntity;
 use App\Domain\Ports\User\IUserRepository;
 use App\Domain\ValueObjects\Credentials;
-use App\Domain\ValueObjects\UserDataForUpdate;
+use App\Domain\ValueObjects\UserData;
 use App\Infrastructure\Models\User;
 
 class UserRepository implements IUserRepository
 {
-    private static function getModel(): User
+    public function all(): UserCollection
     {
-        return new User();
-    }
-    public function save(UserEntity $user): bool
-    {
-        self::getModel()->create($user->toArray());
-
-        return true;
-    }
-
-    public function update(UserDataForUpdate $data): bool
-    {
-        $user = self::getModel()->where('email', $data->getCredentials()->getEmail())->first();
-
-        if (! $user) return false;
+        $users = User::all();
+        $userEntities = [];
         
-        $user->update($data->toArray());
+        foreach ($users as $user) {
+            $userEntities[] = $this->getUserEntity($user);
+        }
 
-        return true;
+        return new UserCollection($userEntities);
     }
 
-    public function getByEmail(string $email): ?UserEntity
+    public function save(UserData $userData): ?UserEntity
     {
-        $user = self::getModel()->where('email', $email)->first();
+        if ($this->exists($userData->getEmail())) {
+            return null;
+        };
+
+        $user = User::create($userData->toDatabase());
+
+        return $this->getUserEntity($user);
+    }
+
+    public function update(UserData $userData): ?UserEntity
+    {
+        $user = User::where('email', $userData->getEmail())->first();
 
         if (! $user) return null;
         
+        $user->update($userData->toDatabase());
+
+        return $this->getUserEntity($user);
+    }
+
+    public function getById(int $id): ?UserEntity
+    {
+        $user = User::find($id);
+
+        if (! $user) return null;
+        
+        return $this->getUserEntity($user);
+    }
+
+    public function delete(int $id): bool
+    {
+        $user = User::find($id);
+
+        if (! $user) return false;
+        
+        return $user->delete();
+    }
+
+    private function getUserEntity(User $user): UserEntity
+    {
         return new UserEntity(
-            $user->id ,
+            $user->id,
             $user->name,
             new Credentials($user->email, $user->password),
             $user->remember_token,
@@ -50,14 +77,8 @@ class UserRepository implements IUserRepository
         );
     }
 
-    public function delete(string $email): bool
+    private function exists(string $email): bool
     {
-        $user = self::getModel()->where('email', $email)->first();
-
-        if (! $user) return false;
-        
-        $user->delete();
-
-        return true;
+        return User::where('email', $email)->exists();
     }
 }

@@ -17,7 +17,7 @@ class ArrayResponse implements IJsonResponse
     public function getResponse(): JsonResponse
     {
         $body = array_merge([
-            'status' => Response::$statusTexts[$this->statusCode] ?? 'OK'
+            'response_status' => Response::$statusTexts[$this->statusCode] ?? 'OK'
         ], $this->data);
 
         return response()->json($body, $this->statusCode);

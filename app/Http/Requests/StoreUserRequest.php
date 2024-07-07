@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response as Status;
 
 class StoreUserRequest extends FormRequest
 {
@@ -24,7 +27,36 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'password' => 'required|min:6'
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name' => [
+                'required' => 'O campo `nome` é obrigatório',
+                'string' => 'O campo `nome` deve serdo tipo texto (string)'
+            ],            
+            'email' => [
+                'required' => 'O campo `email` é obrigatório',
+                'string' => 'O campo `email` deve ser do tipo texto (string)',
+                'email' => 'O e-mail informado deve ser válido'
+            ],
+            'password' => [
+                'required' => 'O campo `senha` é obrigatório',
+                'min' => 'A senha deve conter no mínimo 6 caractéres'
+            ]
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'errors' => $validator->errors()->all()
+        ], Status::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
