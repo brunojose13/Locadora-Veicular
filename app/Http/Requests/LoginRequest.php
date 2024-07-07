@@ -41,7 +41,7 @@ class LoginRequest extends FormRequest
                 'email' => 'O e-mail informado deve ser válido'
             ],
             'password' => [
-                'required' => 'O campo `senha` é obrigatório',
+                'required' => 'O campo `password` é obrigatório',
                 'min' => 'A senha deve conter no mínimo 6 caractéres'
             ]
         ];
