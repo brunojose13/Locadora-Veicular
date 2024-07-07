@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Domain\Services\AuthService;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,6 +15,16 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         //
     ];
+
+    /**
+     * Register services.
+     */
+    public function register(): void
+    {
+        $this->app->singleton(AuthService::class, function () {
+            return new AuthService();
+        });
+    }
 
     /**
      * Register any authentication / authorization services.

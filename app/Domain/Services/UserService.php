@@ -15,8 +15,7 @@ use App\Exceptions\UserNotFoundException;
 
 class UserService implements IUserService
 {
-    // @todo utilizar serviço de auth para eliminar sessões
-    public function __construct(private IUserRepository $userRepository)
+    public function __construct(private IUserRepository $userRepository, private AuthService $authService)
     {
     }
 
@@ -65,6 +64,8 @@ class UserService implements IUserService
         if (! $wasDeleted) {
             throw new UserNotFoundException();
         }
+
+        $this->authService->invalidate();
 
         return new DeletedUserOutput();
     }
