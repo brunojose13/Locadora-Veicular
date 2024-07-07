@@ -75,9 +75,7 @@ class CarController extends Controller
                 $request->input('brand'),
                 $request->input('model'),
                 $request->input('age'),
-                $request->input('price'),
-                null, 
-                null                
+                $request->input('price')             
             ));
                 
             $response = new ArrayResponse($output->getOutput());
@@ -137,6 +135,26 @@ class CarController extends Controller
             return $response->getResponse();
         } catch (CarNotFoundException $exception) {
             $response = new MessageResponse($exception->getMessage(), Response::HTTP_NOT_FOUND);
+
+            return $response->getResponse();
+        } catch (\Throwable $t) {
+            $response = new ServerErrorResponse(
+                $t->getFile(),
+                $t->getLine(),
+                $t->getTraceAsString(),
+                $t->getMessage()
+            );
+
+            return $response->getResponse();
+        }
+    }
+
+    public function destroyedList(): Response
+    {
+        try {
+            $output = $this->carService->getDeletedCars();
+            
+            $response = new ArrayResponse($output->getOutput());
 
             return $response->getResponse();
         } catch (\Throwable $t) {
