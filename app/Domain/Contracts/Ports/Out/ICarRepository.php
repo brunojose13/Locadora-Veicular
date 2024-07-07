@@ -15,4 +15,5 @@ interface ICarRepository
     public function update(Car $car): ?Car;
     public function getById(int $id): ?Car;
     public function delete(int $id): bool;
+    public function allDeleted(): CarCollection;
 }

@@ -17,4 +17,5 @@ interface ICarService
     public function updateCar(Car $car): CarOutput;
     public function getCarById(int $id): CarOutput;
     public function deleteCar(int $id): DeletedCarOutput;
+    public function getDeletedCars(): CarListOutput;
 }
