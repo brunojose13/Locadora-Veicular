@@ -132,9 +132,7 @@ class UserController extends Controller
     public function destroy(Request $request): Response
     {
         try {
-            $output = $this->userService->deleteUser(
-                (int) $request->route('id')
-            );
+            $output = $this->userService->deleteUser($request->user()->id);
             
             $response = new ArrayResponse($output->getOutput());
 

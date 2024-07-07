@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/listar-usuarios', [UserController::class, 'index'])->name('user.index');
     Route::put('/usuario/editar', [UserController::class, 'update'])->name('user.update');
     Route::get('/usuario/buscar/{id}', [UserController::class, 'show'])->name('user.show');
-    Route::delete('/usuario/remover/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::delete('/usuario/excluir-conta', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
 Route::get('/unauthorized', [AuthController::class, 'unauthorize'])->name('unauthorized');
