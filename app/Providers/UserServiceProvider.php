@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Domain\Ports\User\IUserRepository;
+use App\Domain\Contracts\Ports\Out\IUserRepository;
 use App\Domain\Services\UserService;
 use App\Infrastructure\Adapters\UserRepository;
 use Illuminate\Support\ServiceProvider;

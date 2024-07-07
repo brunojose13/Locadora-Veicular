@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Domain\Services;
 
-use App\Domain\Ports\User\DeletedUserOutput;
-use App\Domain\Ports\User\IUserRepository;
-use App\Domain\Ports\User\IUserService;
-use App\Domain\Ports\User\UserListOutput;
-use App\Domain\Ports\User\UserOutput;
+use App\Domain\Contracts\Ports\In\IUserService;
+use App\Domain\Contracts\Ports\Out\IUserRepository;
+use App\Domain\Contracts\Ports\Out\DeletedUserOutput;
+use App\Domain\Contracts\Ports\Out\UserListOutput;
+use App\Domain\Contracts\Ports\Out\UserOutput;
 use App\Domain\ValueObjects\UserData;
 use App\Exceptions\UserAlreadyExistsException;
 use App\Exceptions\UserNotFoundException;
 
 class UserService implements IUserService
 {
+    // @todo utilizar serviço de auth para eliminar sessões
     public function __construct(private IUserRepository $userRepository)
     {
     }

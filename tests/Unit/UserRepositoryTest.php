@@ -1,8 +1,8 @@
 <?php
 
+use App\Domain\Contracts\Ports\Out\IUserRepository;
 use App\Domain\Entities\Collections\UserCollection;
 use App\Domain\Entities\User as UserEntity;
-use App\Domain\Ports\User\IUserRepository;
 use App\Domain\ValueObjects\Credentials;
 use App\Domain\ValueObjects\UserData;
 use App\Infrastructure\Models\User;

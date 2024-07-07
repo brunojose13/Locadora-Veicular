@@ -2,12 +2,11 @@
 
 namespace App\Exceptions;
 
-use App\Domain\Ports\IEntity;
-use Exception;
+use App\Domain\Contracts\IEntity;
 
 use function App\Helpers\getClassShortName;
 
-class InvalidCollectionDataException extends Exception
+class InvalidCollectionDataException extends \Exception
 {
     public function __construct(string $collectionClass, string $expectedClass)
     {
