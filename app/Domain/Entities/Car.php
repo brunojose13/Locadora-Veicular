@@ -10,23 +10,24 @@ use Illuminate\Support\Carbon;
 class Car implements IEntity
 {
     public function __construct(
-        private ?int $id,
+        private int $id,
         private string $brand,
         private string $model,
         private int $age,
         private float $price,
-        private ?Carbon $createdAt,
-        private ?Carbon $updatedAt
+        private ?Carbon $createdAt = null,
+        private ?Carbon $updatedAt = null,
+        private ?Carbon $deletedAt = null
     ) {}
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
     public function toArray(): array
     {
-        return [
+        $data = [
             'id' => $this->getId(),
             'brand' => $this->brand,
             'model' => $this->model,
@@ -35,6 +36,12 @@ class Car implements IEntity
             'created_at' => $this->createdAt?->toDateTimeString(),
             'updated_at' => $this->updatedAt?->toDateTimeString()
         ];
+
+        if (! empty($this->deletedAt)) {
+            $data['deleted_at'] = $this->deletedAt->toDateTimeString();
+        }
+
+        return $data;
     }
 
     public function toDatabase(): array
