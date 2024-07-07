@@ -39,6 +39,11 @@ class Car implements IEntity
 
     public function toDatabase(): array
     {
-        return $this->toArray();
+        $data = $this->toArray();
+
+        unset($data['created_at']);
+        unset($data['updated_at']);
+
+        return $data;
     }
 }
