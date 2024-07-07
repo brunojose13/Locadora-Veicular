@@ -39,9 +39,9 @@ Route::prefix('carros')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/listar-todos', [CarController::class, 'index'])->name('car.index');
         Route::post('/cadastrar', [CarController::class, 'store'])->name('car.store');
-        Route::put('/editar/{id}', [CarController::class, 'update'])->name('car.update');
+        Route::put('/editar', [CarController::class, 'update'])->name('car.update');
         Route::get('/buscar/{id}', [CarController::class, 'show'])->name('car.show');
-        Route::delete('/remover', [CarController::class, 'destroy'])->name('car.destroy');
+        Route::delete('/remover/{id}', [CarController::class, 'destroy'])->name('car.destroy');
+        Route::get('/listar-removidos', [CarController::class, 'destroyedList'])->name('car.destroyed.list');
     });
 });
-
