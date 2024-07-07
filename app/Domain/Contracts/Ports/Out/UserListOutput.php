@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Ports\User;
+namespace App\Domain\Contracts\Ports\Out;
 
 use App\Domain\Entities\Collections\UserCollection;
 

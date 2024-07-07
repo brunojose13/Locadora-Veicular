@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Ports\User;
-
-use App\Domain\Entities\User;
+namespace App\Domain\Contracts\Ports\Out;
 
 class DeletedUserOutput
 {
