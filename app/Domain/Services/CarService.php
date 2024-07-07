@@ -68,4 +68,9 @@ class CarService implements ICarService
 
         return new DeletedCarOutput();
     }
+
+    public function getDeletedCars(): CarListOutput
+    {
+        return new CarListOutput($this->carRepository->allDeleted());
+    }
 }

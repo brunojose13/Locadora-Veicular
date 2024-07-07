@@ -60,6 +60,18 @@ class CarRepository implements ICarRepository
         return $car->delete();
     }
 
+    public function allDeleted(): CarCollection
+    {
+        $cars = Car::onlyTrashed()->getModels();
+        $carEntities = [];
+        
+        foreach ($cars as $car) {
+            $carEntities[] = $this->getCarEntity($car);
+        }
+
+        return new CarCollection($carEntities);
+    }
+
     private function getCarEntity(Car $car): CarEntity
     {
         return new CarEntity(
@@ -69,7 +81,8 @@ class CarRepository implements ICarRepository
             $car->age,
             $car->price,
             $car->created_at,
-            $car->updated_at
+            $car->updated_at,
+            $car->deleted_at
         );
     }
 }
