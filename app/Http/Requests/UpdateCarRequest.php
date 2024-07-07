@@ -39,8 +39,8 @@ class UpdateCarRequest extends FormRequest
     {
         return [
             'id' => [
-                'required' => 'O campo `brand` é obrigatório',
-                'integer' => 'O campo `age` deve ser do tipo inteiro (integer)'
+                'required' => 'O campo `id` é obrigatório',
+                'integer' => 'O campo `id` deve ser do tipo inteiro (integer)'
             ],
             'brand' => [
                 'required' => 'O campo `brand` é obrigatório',
