@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Domain\Entities\Car;
 use App\Domain\Services\CarService;
 use App\Domain\ValueObjects\CarData;
-use App\Domain\ValueObjects\Credentials;
 use App\Exceptions\CarNotFoundException;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
