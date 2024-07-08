@@ -25,11 +25,7 @@ class CarController extends Controller
     public function index(): Response
     {
         try {
-            $output = $this->carService->getCars();
-            
-            $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
+            $response = new ArrayResponse($this->carService->getCars()->getOutput());
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -37,9 +33,9 @@ class CarController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function store(StoreCarRequest $request): Response
@@ -53,8 +49,6 @@ class CarController extends Controller
             ));
                 
             $response = new ArrayResponse($output->getOutput(), Response::HTTP_CREATED);
-
-            return $response->getResponse();
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -62,9 +56,9 @@ class CarController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function update(UpdateCarRequest $request): Response
@@ -79,12 +73,8 @@ class CarController extends Controller
             ));
                 
             $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
         } catch (CarNotFoundException $exception) {
             $response = new MessageResponse($exception->getMessage(), Response::HTTP_NOT_FOUND);
-
-            return $response->getResponse();
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -92,9 +82,9 @@ class CarController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function show(Request $request): Response
@@ -105,12 +95,8 @@ class CarController extends Controller
             );
             
             $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
         } catch (CarNotFoundException $exception) {
             $response = new MessageResponse($exception->getMessage(), Response::HTTP_NOT_FOUND);
-
-            return $response->getResponse();
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -118,9 +104,9 @@ class CarController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function destroy(Request $request): Response
@@ -131,12 +117,8 @@ class CarController extends Controller
             );
             
             $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
         } catch (CarNotFoundException $exception) {
             $response = new MessageResponse($exception->getMessage(), Response::HTTP_NOT_FOUND);
-
-            return $response->getResponse();
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -144,19 +126,15 @@ class CarController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function destroyedList(): Response
     {
         try {
-            $output = $this->carService->getDeletedCars();
-            
-            $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
+            $response = new ArrayResponse($this->carService->getDeletedCars()->getOutput());
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -164,8 +142,8 @@ class CarController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 }

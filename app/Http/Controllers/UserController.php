@@ -26,11 +26,7 @@ class UserController extends Controller
     public function index(): Response
     {
         try {
-            $output = $this->userService->getUsers();
-            
-            $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
+            $response = new ArrayResponse($this->userService->getUsers()->getOutput());
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -38,9 +34,9 @@ class UserController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function store(StoreUserRequest $request): Response
@@ -55,12 +51,8 @@ class UserController extends Controller
             ));
                 
             $response = new ArrayResponse($output->getOutput(), Response::HTTP_CREATED);
-
-            return $response->getResponse();
         } catch (UserAlreadyExistsException $e) {
             $response = new MessageResponse($e->getMessage(), Response::HTTP_EXPECTATION_FAILED);
-
-            return $response->getResponse();
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -68,9 +60,9 @@ class UserController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function update(UpdateUserRequest $request): Response
@@ -85,12 +77,8 @@ class UserController extends Controller
             ));
                 
             $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
         } catch (UserNotFoundException $exception) {
             $response = new MessageResponse($exception->getMessage(), Response::HTTP_NOT_FOUND);
-
-            return $response->getResponse();
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -99,8 +87,9 @@ class UserController extends Controller
                 $t->getMessage()
             );
 
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function show(Request $request): Response
@@ -111,12 +100,8 @@ class UserController extends Controller
             );
             
             $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
         } catch (UserNotFoundException $exception) {
             $response = new MessageResponse($exception->getMessage(), Response::HTTP_NOT_FOUND);
-
-            return $response->getResponse();
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -124,23 +109,21 @@ class UserController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 
     public function destroy(Request $request): Response
     {
         try {
-            $output = $this->userService->deleteUser($request->user()->id);
+            $output = $this->userService->deleteUser(
+                $request->user()->id
+            );
             
             $response = new ArrayResponse($output->getOutput());
-
-            return $response->getResponse();
         } catch (UserNotFoundException $exception) {
             $response = new MessageResponse($exception->getMessage(), Response::HTTP_NOT_FOUND);
-
-            return $response->getResponse();
         } catch (\Throwable $t) {
             $response = new ServerErrorResponse(
                 $t->getFile(),
@@ -148,8 +131,8 @@ class UserController extends Controller
                 $t->getTraceAsString(),
                 $t->getMessage()
             );
-
-            return $response->getResponse();
         }
+
+        return $response->getResponse();
     }
 }
