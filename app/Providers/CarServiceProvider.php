@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Domain\Contracts\Ports\Out\ICarRepository;
+use App\Domain\Ports\Out\ICarRepository;
 use App\Domain\Services\CarService;
 use App\Infrastructure\Adapters\CarRepository;
 use Illuminate\Support\ServiceProvider;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Contracts\Ports\In;
+namespace App\Domain\Ports\In;
 
 use App\Domain\ValueObjects\Credentials;
 

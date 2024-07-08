@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Contracts\Ports\In;
+namespace App\Domain\Ports\In;
 
-use App\Domain\Contracts\Ports\Out\DeletedUserOutput;
-use App\Domain\Contracts\Ports\Out\UserListOutput;
-use App\Domain\Contracts\Ports\Out\UserOutput;
+use App\Domain\Ports\Out\DeletedUserOutput;
+use App\Domain\Ports\Out\UserListOutput;
+use App\Domain\Ports\Out\UserOutput;
 use App\Domain\ValueObjects\UserData;
 
 interface IUserService

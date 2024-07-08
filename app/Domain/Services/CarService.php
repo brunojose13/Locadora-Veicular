@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Services;
 
-use App\Domain\Contracts\Ports\In\ICarService;
-use App\Domain\Contracts\Ports\Out\CarListOutput;
-use App\Domain\Contracts\Ports\Out\CarOutput;
-use App\Domain\Contracts\Ports\Out\DeletedCarOutput;
-use App\Domain\Contracts\Ports\Out\ICarRepository;
+use App\Domain\Ports\In\ICarService;
+use App\Domain\Ports\Out\CarListOutput;
+use App\Domain\Ports\Out\CarOutput;
+use App\Domain\Ports\Out\DeletedCarOutput;
+use App\Domain\Ports\Out\ICarRepository;
 use App\Domain\Entities\Car;
 use App\Domain\ValueObjects\CarData;
 use App\Exceptions\CarNotFoundException;

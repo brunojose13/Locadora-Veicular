@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Services;
 
-use App\Domain\Contracts\Ports\In\IAuthService;
+use App\Domain\Ports\In\IAuthService;
 use App\Domain\ValueObjects\Credentials;
 use App\Exceptions\CredentialsException;
 use App\Exceptions\UnauthorizedUserException;

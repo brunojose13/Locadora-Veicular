@@ -1,8 +1,8 @@
 <?php
 
-use App\Domain\Contracts\Ports\Out\CarListOutput;
-use App\Domain\Contracts\Ports\Out\CarOutput;
-use App\Domain\Contracts\Ports\Out\DeletedCarOutput;
+use App\Domain\Ports\Out\CarListOutput;
+use App\Domain\Ports\Out\CarOutput;
+use App\Domain\Ports\Out\DeletedCarOutput;
 use App\Domain\Entities\Car as CarEntity;
 use App\Domain\Services\CarService;
 use App\Domain\ValueObjects\CarData;

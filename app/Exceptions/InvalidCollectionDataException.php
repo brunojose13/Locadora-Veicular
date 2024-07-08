@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-use App\Domain\Contracts\IEntity;
+use App\Domain\Ports\IEntity;
 
 use function App\Helpers\getClassShortName;
 

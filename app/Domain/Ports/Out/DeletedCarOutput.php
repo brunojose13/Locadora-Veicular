@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Contracts\Ports\Out;
+namespace App\Domain\Ports\Out;
 
-class DeletedUserOutput
+class DeletedCarOutput
 {
     public function __construct()
     {
@@ -14,7 +14,7 @@ class DeletedUserOutput
     {
         return [
             'deleted' => true,
-            'message' => 'Usuário deletado com sucesso'
+            'message' => 'Carro deletado com sucesso'
         ];
     }
 }

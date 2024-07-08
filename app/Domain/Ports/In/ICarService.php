@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Contracts\Ports\In;
+namespace App\Domain\Ports\In;
 
-use App\Domain\Contracts\Ports\Out\CarListOutput;
-use App\Domain\Contracts\Ports\Out\CarOutput;
-use App\Domain\Contracts\Ports\Out\DeletedCarOutput;
+use App\Domain\Ports\Out\CarListOutput;
+use App\Domain\Ports\Out\CarOutput;
+use App\Domain\Ports\Out\DeletedCarOutput;
 use App\Domain\Entities\Car;
 use App\Domain\ValueObjects\CarData;
 

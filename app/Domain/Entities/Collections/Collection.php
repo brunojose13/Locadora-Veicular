@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities\Collections;
 
-use App\Domain\Contracts\IEntity;
+use App\Domain\Ports\IEntity;
 use App\Exceptions\InvalidCollectionDataException;
 
 use function App\Helpers\getClassShortName;

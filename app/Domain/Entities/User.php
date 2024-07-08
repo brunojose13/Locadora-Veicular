@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use App\Domain\Contracts\IEntity;
+use App\Domain\Ports\IEntity;
 use App\Domain\ValueObjects\Credentials;
 use Illuminate\Support\Carbon;
 

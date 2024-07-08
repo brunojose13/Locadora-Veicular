@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Services;
 
-use App\Domain\Contracts\Ports\In\IUserService;
-use App\Domain\Contracts\Ports\Out\IUserRepository;
-use App\Domain\Contracts\Ports\Out\DeletedUserOutput;
-use App\Domain\Contracts\Ports\Out\UserListOutput;
-use App\Domain\Contracts\Ports\Out\UserOutput;
+use App\Domain\Ports\In\IUserService;
+use App\Domain\Ports\Out\IUserRepository;
+use App\Domain\Ports\Out\DeletedUserOutput;
+use App\Domain\Ports\Out\UserListOutput;
+use App\Domain\Ports\Out\UserOutput;
 use App\Domain\ValueObjects\UserData;
 use App\Exceptions\UserAlreadyExistsException;
 use App\Exceptions\UserNotFoundException;
