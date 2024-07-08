@@ -27,13 +27,9 @@ class CarService implements ICarService
 
     public function createCar(CarData $userData): CarOutput
     {
-        $car = $this->carRepository->save($userData);
-        
-        if (empty($car)) {
-            throw new UserAlreadyExistsException();
-        }
-
-        return new CarOutput($car);
+        return new CarOutput(
+            $this->carRepository->save($userData)
+        );
     }
 
     public function updateCar(Car $car): CarOutput
