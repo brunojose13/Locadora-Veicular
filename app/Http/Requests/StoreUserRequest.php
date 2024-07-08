@@ -37,8 +37,8 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => [
-                'required' => 'O campo `nome` é obrigatório',
-                'string' => 'O campo `nome` deve serdo tipo texto (string)'
+                'required' => 'O campo `name` é obrigatório',
+                'string' => 'O campo `name` deve serdo tipo texto (string)'
             ],            
             'email' => [
                 'required' => 'O campo `email` é obrigatório',
@@ -46,7 +46,7 @@ class StoreUserRequest extends FormRequest
                 'email' => 'O e-mail informado deve ser válido'
             ],
             'password' => [
-                'required' => 'O campo `senha` é obrigatório',
+                'required' => 'O campo `password` é obrigatório',
                 'min' => 'A senha deve conter no mínimo 6 caractéres'
             ]
         ];

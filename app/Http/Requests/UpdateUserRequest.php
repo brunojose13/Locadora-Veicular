@@ -36,11 +36,11 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => [
-                'required' => 'O campo `nome` é obrigatório',
+                'required' => 'O campo `name` é obrigatório',
                 'string' => 'O campo `nome` deve serdo tipo texto (string)'
             ],            
             'password' => [
-                'required' => 'O campo `senha` é obrigatório',
+                'required' => 'O campo `password` é obrigatório',
                 'min' => 'A senha deve conter no mínimo 6 caractéres'
             ]
         ];

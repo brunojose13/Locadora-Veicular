@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,16 +16,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/usuario/cadastrar', [UserController::class, 'store'])->name('store');
+Route::get('/unauthorized', [AuthController::class, 'unauthorize'])->name('unauthorized');
 Route::post('login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/trazer-dados', [AuthController::class, 'recoverAuthenticated'])->name('authenticated.user');
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/listar-usuarios', [UserController::class, 'index'])->name('user.index');
-    Route::put('/usuario/editar', [UserController::class, 'update'])->name('user.update');
-    Route::get('/usuario/buscar/{id}', [UserController::class, 'show'])->name('user.show');
-    Route::delete('/usuario/excluir-conta', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/trazer-dados', [AuthController::class, 'recoverAuthenticated'])->name('authenticated.user');
 });
 
-Route::get('/unauthorized', [AuthController::class, 'unauthorize'])->name('unauthorized');
+Route::prefix('usuarios')->group(function () {
+    Route::post('/cadastrar', [UserController::class, 'store'])->name('user.store');
+    
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/listar-todos', [UserController::class, 'index'])->name('user.index');
+        Route::put('/editar', [UserController::class, 'update'])->name('user.update');
+        Route::get('/buscar/{id}', [UserController::class, 'show'])->name('user.show');
+        Route::delete('/excluir-conta', [UserController::class, 'destroy'])->name('user.destroy');
+    });
+});
+
+Route::prefix('carros')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/listar-todos', [CarController::class, 'index'])->name('car.index');
+        Route::post('/cadastrar', [CarController::class, 'store'])->name('car.store');
+        Route::put('/editar', [CarController::class, 'update'])->name('car.update');
+        Route::get('/buscar/{id}', [CarController::class, 'show'])->name('car.show');
+        Route::delete('/remover/{id}', [CarController::class, 'destroy'])->name('car.destroy');
+        Route::get('/listar-removidos', [CarController::class, 'destroyedList'])->name('car.destroyed.list');
+    });
+});

@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'pt_BR',
 
     /*
     |--------------------------------------------------------------------------
@@ -166,7 +166,8 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\UserServiceProvider::class
+        App\Providers\UserServiceProvider::class,
+        App\Providers\CarServiceProvider::class,
         // App\Providers\AppServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
     ])->toArray(),

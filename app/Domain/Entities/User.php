@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 class User implements IEntity
 {
     public function __construct(
-        private ?int $id,
+        private int $id,
         private string $name,
         private Credentials $credentials,
         private ?string $rememberToken,
@@ -19,7 +19,7 @@ class User implements IEntity
         private ?Carbon $updatedAt
     ) {}
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }

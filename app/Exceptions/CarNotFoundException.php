@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Exceptions;
 
-class UserNotFoundException extends \Exception
+class CarNotFoundException extends \Exception
 {
     public function __construct()
     {
-        parent::__construct('Usuário não encontrado!');
+        parent::__construct('Carro não encontrado!');
     }
 }
