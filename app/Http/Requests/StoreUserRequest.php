@@ -41,8 +41,8 @@ class StoreUserRequest extends FormRequest
                 'string' => 'O campo `name` deve serdo tipo texto (string)'
             ],            
             'email' => [
-                'required' => 'O campo `password` é obrigatório',
-                'string' => 'O campo `password` deve ser do tipo texto (string)',
+                'required' => 'O campo `email` é obrigatório',
+                'string' => 'O campo `email` deve ser do tipo texto (string)',
                 'email' => 'O e-mail informado deve ser válido'
             ],
             'password' => [
