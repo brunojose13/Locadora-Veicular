@@ -11,7 +11,7 @@ beforeEach(function () {
     $this->userRepository = $this->app->make(IUserRepository::class);
 });
 
-describe('C.R.U.D for User', function () {
+describe('CRUD for User', function () {
     it('may list all', function () {
         $userEntityCollection = $this->userRepository->all();
 
@@ -27,7 +27,7 @@ describe('C.R.U.D for User', function () {
         ));
 
         expect($userEntity)->toBeInstanceOf(UserEntity::class);
-    })->with('user');
+    })->with('userModel');
 
     it('may update', function (User $user) {
         $userEntity = $this->userRepository->update(new UserData(
@@ -36,17 +36,17 @@ describe('C.R.U.D for User', function () {
         ));
 
         expect($userEntity)->toBeInstanceOf(UserEntity::class);
-    })->with('user');
+    })->with('userModel');
 
     it('may search', function (User $user) {
         $userEntity = $this->userRepository->getById($user->id);
 
         expect($userEntity)->toBeInstanceOf(UserEntity::class);
-    })->with('user');
+    })->with('userModel');
 
     it('may delete', function (User $user) {
         $success = $this->userRepository->delete($user->id);
 
         expect($success)->toBeTrue();
-    })->with('user');
+    })->with('userModel');
 });
