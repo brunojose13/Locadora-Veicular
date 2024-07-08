@@ -12,6 +12,12 @@ A API conta com as seguintes caractetisticas:
 - Testes Automatizados
 <br>
 
+## Collection Postman
+Utilize o link abaixo para acessar a Collection do Postman
+<br>[Postman-Collection-Locadora-Veicular](https://elements.getpostman.com/redirect?entityId=24702725-d04e8cf3-aa55-4d99-bcb8-3c46c56bb91b&entityType=collection)
+<br>
+<br>
+
 ## Comandos
 
 Abaixo estão listados os principais comandos para subir o ambiente da aplicação.
