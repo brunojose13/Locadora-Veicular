@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Services;
 
+use App\Domain\Entities\User as UserEntity;
 use App\Domain\Ports\In\IAuthService;
+use App\Domain\Ports\Out\LoginOutput;
+use App\Domain\Ports\Out\LogoutOutput;
+use App\Domain\Ports\Out\UserOutput;
 use App\Domain\ValueObjects\Credentials;
 use App\Exceptions\CredentialsException;
 use App\Exceptions\UnauthorizedUserException;
@@ -12,7 +16,7 @@ use App\Infrastructure\Models\User;
 
 class AuthService implements IAuthService
 {
-    public function authenticate(Credentials $credentials): array
+    public function authenticate(Credentials $credentials): LoginOutput
     {
         if (! auth()->attempt($credentials->toArray())) {
             throw new CredentialsException();
@@ -28,30 +32,33 @@ class AuthService implements IAuthService
              now()->addMinutes($minutesExpiration)
          )->plainTextToken;
 
-        return [
-            'message' => 'Login realizado com sucesso!',
-            'token' => $token,
-            'expire in' => $minutesExpiration . ' minutes'
-        ];
+        return new LoginOutput($token, (int) $minutesExpiration);
     }
 
-    public function invalidate(): string
+    public function invalidate(): LogoutOutput
     {
         /** @var User $user */
         $user = auth()->user();
         $user->tokens()->delete();
 
-        return 'Usuário deslogado com sucesso!';
+        return new LogoutOutput();
     }
 
-    public function getAttributesFromLoggedAuth(): array
+    public function getAttributesFromLoggedAuth(): UserOutput
     {
         /** @var User $user */
         $user = auth()->user();
 
-        return [
-           'user' => $user->toArray()
-        ];
+        $userEntity = new UserEntity(
+            $user->id,
+            $user->name,
+            new Credentials($user->email, $user->password),
+            $user->remember_token,
+            $user->created_at,
+            $user->updated_at
+        );
+
+        return new UserOutput($userEntity);
     }
 
     public function getDeauthorizeMessage(): void

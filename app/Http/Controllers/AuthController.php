@@ -27,7 +27,7 @@ class AuthController extends Controller
                 (string) $request->input('password')
             ));
 
-            $response = new ArrayResponse($output, Response::HTTP_ACCEPTED);
+            $response = new ArrayResponse($output->getOutput(), Response::HTTP_ACCEPTED);
         } catch (CredentialsException $e) {
             $response = new MessageResponse($e->getMessage(), Response::HTTP_UNAUTHORIZED);    
         }
@@ -38,7 +38,7 @@ class AuthController extends Controller
     public function logout(): Response
     {
         $output = $this->authService->invalidate();
-        $response = new MessageResponse($output);
+        $response = new MessageResponse($output->getOutput());
         
         return $response->getResponse();
     }
@@ -46,7 +46,7 @@ class AuthController extends Controller
     public function recoverAuthenticated(): Response
     {
         $output = $this->authService->getAttributesFromLoggedAuth();
-        $response = new ArrayResponse($output);
+        $response = new ArrayResponse($output->getOutput());
         
         return $response->getResponse();
     }
