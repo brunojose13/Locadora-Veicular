@@ -6,18 +6,16 @@ namespace App\Domain\Services;
 
 use App\Domain\Contracts\Ports\In\IAuthService;
 use App\Domain\ValueObjects\Credentials;
+use App\Exceptions\CredentialsException;
 use App\Exceptions\UnauthorizedUserException;
 use App\Infrastructure\Models\User;
-use Illuminate\Auth\AuthenticationException;
 
 class AuthService implements IAuthService
 {
     public function authenticate(Credentials $credentials): array
     {
         if (! auth()->attempt($credentials->toArray())) {
-            throw new AuthenticationException(
-                'O e-mail ou a senha estão inválidos'
-            );
+            throw new CredentialsException();
         }
 
          /** @var User $user */

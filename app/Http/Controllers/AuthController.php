@@ -6,11 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Domain\Services\AuthService;
 use App\Domain\ValueObjects\Credentials;
+use App\Exceptions\CredentialsException;
 use App\Exceptions\UnauthorizedUserException;
 use App\Http\Requests\LoginRequest;
 use App\Http\Responses\ArrayResponse;
 use App\Http\Responses\MessageResponse;
-use Illuminate\Auth\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -28,13 +28,11 @@ class AuthController extends Controller
             ));
 
             $response = new ArrayResponse($output, Response::HTTP_ACCEPTED);
-
-            return $response->getResponse();
-        } catch (AuthenticationException $exception) {
-            $response = new MessageResponse($exception->getMessage(), Response::HTTP_UNAUTHORIZED);
-            
-            return $response->getResponse();
+        } catch (CredentialsException $e) {
+            $response = new MessageResponse($e->getMessage(), Response::HTTP_UNAUTHORIZED);    
         }
+
+        return $response->getResponse();
     }
 
     public function logout(): Response
