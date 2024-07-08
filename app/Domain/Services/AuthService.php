@@ -6,6 +6,7 @@ namespace App\Domain\Services;
 
 use App\Domain\Contracts\Ports\In\IAuthService;
 use App\Domain\ValueObjects\Credentials;
+use App\Exceptions\UnauthorizedUserException;
 use App\Infrastructure\Models\User;
 use Illuminate\Auth\AuthenticationException;
 
@@ -55,9 +56,8 @@ class AuthService implements IAuthService
         ];
     }
 
-    // @todo transformar em exception
-    public function getDeauthorizeMessage(): string
+    public function getDeauthorizeMessage(): void
     {
-        return 'Não autorizado! Você precisa estar logado para poder acessar o sistema';
+        throw new UnauthorizedUserException();
     }
 }

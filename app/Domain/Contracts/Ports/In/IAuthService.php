@@ -11,5 +11,5 @@ interface IAuthService
     public function authenticate(Credentials $credentials): array;
     public function invalidate(): string;
     public function getAttributesFromLoggedAuth(): array;
-    public function getDeauthorizeMessage(): string;
+    public function getDeauthorizeMessage(): void;
 }

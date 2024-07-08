@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Services\AuthService;
 use App\Domain\ValueObjects\Credentials;
+use App\Exceptions\UnauthorizedUserException;
 use App\Http\Requests\LoginRequest;
 use App\Http\Responses\ArrayResponse;
 use App\Http\Responses\MessageResponse;
@@ -54,11 +55,15 @@ class AuthController extends Controller
 
     public function unauthorize(): Response
     {
-        $response = new MessageResponse(
-            $this->authService->getDeauthorizeMessage(),
-            Response::HTTP_UNAUTHORIZED
-        );
-            
+        try {
+            $this->authService->getDeauthorizeMessage();
+        } catch (UnauthorizedUserException $e) {
+            $response = new MessageResponse(
+                $e->getMessage(),
+                Response::HTTP_UNAUTHORIZED
+            );
+        } 
+        
         return $response->getResponse();
     }
 }
