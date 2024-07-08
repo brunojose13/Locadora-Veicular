@@ -11,7 +11,6 @@ use App\Domain\Contracts\Ports\Out\DeletedCarOutput;
 use App\Domain\Contracts\Ports\Out\ICarRepository;
 use App\Domain\Entities\Car;
 use App\Domain\ValueObjects\CarData;
-use App\Exceptions\UserAlreadyExistsException;
 use App\Exceptions\CarNotFoundException;
 
 class CarService implements ICarService
